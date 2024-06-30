@@ -1,24 +1,22 @@
 import React from 'react'
 import Nav from "./component/Nav"
-import RouteComponent from './Routes/RouteComponent'
-import axios from "axios"
-
+import { Routes, Route } from 'react-router-dom';
+import Library from './component/Library'
+import Home from "./component/Home"
+import Entry from "./component/Entry"
+import Details from './component/Details';
 const App = () => {
-  const getusers = async () =>{
-    try{
-      const {data} = await axios.get("https://jsonplaceholder.typicode.com/users")
-      console.log(data)
-    }catch(error){
-      console.log(error)
-    }
-  
-  }
   return (
-    <div className='h-screen w-screen bg-slate-400 gap-10  '>
+    <div>
       <Nav />
-    <button className='bg-green-600 h-12 w-24' onClick={getusers}> Go</button>
-      <RouteComponent />
-      
+      <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/create" element={<Entry />} />
+      <Route path="/show" element={<Library />}>
+        <Route path="/show/:id" element={<Details />}/>
+        </Route >       
+      <Route path="*" element={<h1>Wrong url</h1>} />
+      </Routes>
     </div>
   )
 }
